@@ -14,7 +14,11 @@ class UnifiedLoggerProtocolImplementation: UnifiedLoggerProtocol, UnifiedLoggerI
     }
     
     func logEvent(messageInfo: String, eventType: OSLogType, accessLevel: AccessLevel, category: SignPostCategory) {
-        let log = createLog(category: category) as! OSLog
+        
+        guard let log = createLog(category: category) as? OSLog else {
+            os_log("Failed to create OSLog instance. [Error Message: \(messageInfo).]  [Category: \(category.rawValue)]")
+            return
+        }
         switch accessLevel {
         case .private:
             os_log("%{private}@", log: log, messageInfo)

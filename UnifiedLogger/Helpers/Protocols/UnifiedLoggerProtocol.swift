@@ -9,11 +9,12 @@ import Foundation
 import os
 
 public protocol UnifiedLoggerProtocol: AnyObject {
+    associatedtype UnifiedLogger = UnifiedLoggerInit
     func logEvent(messageInfo: String,
                  eventType: OSLogType,
                  accessLevel: AccessLevel,
                  category:SignPostCategory)
-    func createLog(category: SignPostCategory) -> UnifiedLoggerInit
+    func createLog(category: SignPostCategory) -> UnifiedLogger
 }
 
 public protocol UnifiedLoggerInit {
